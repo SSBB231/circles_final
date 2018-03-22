@@ -35,7 +35,7 @@ class Background extends Component
                 if(cModel.circleID === circleModel.circleID)
                 {
                     console.log("Found");
-                    circles.splice(circles.indexOf(circleModel), 1);
+                    circles.splice(circles.indexOf(circle), 1);
                     console.log("CIRCLES LEFT:");
                     console.log(circles);
                     break;
@@ -57,7 +57,7 @@ class Background extends Component
         // let circle = <Circle key={this.state.numCircles} x={x} y={y}/>;
         let circle = new CircleModel(this.state.numCircles, x, y);
 
-        circles.push(<CircleView key={this.state.numCircles} circleModel={circle} remove={this.removeCircle.bind(this)}/>);
+        circles.push(<CircleView key={this.state.numCircles} circleModel={circle} removeC={(circleModel)=>this.removeCircle.bind(this)(circleModel)}/>);
         this.setState({numCircles: this.state.numCircles+1, circles: circles});
     }
 
@@ -99,7 +99,6 @@ class Background extends Component
             if(dist < circleModel.w/2)
             {
                 console.log("Dentro de un circulo!");
-                // this.removeCircle(circleModel);
                 return true;
             }
         }
@@ -258,7 +257,7 @@ class CircleView extends Component
                 style={{position: "absolute", left: circleModel.x-circleModel.w/2, top: circleModel.y-circleModel.h/2}}
                 onClick={()=>{
                     this.startTimer();
-                    setTimeout(this.props.remove, 5000, circleModel);
+                    setTimeout(this.props.removeC, 5000, circleModel);
                 }}
             >
                 {this.state.img}
