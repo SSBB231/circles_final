@@ -212,6 +212,7 @@ class CircleView extends Component
             circleModel: props.circleModel,
             number: 5,
             visible: false,
+            vanishing: false,
             img: null,
         };
     }
@@ -225,9 +226,14 @@ class CircleView extends Component
 
     startTimer()
     {
+        //Si ya está desapareciendo, no hace nada
+        if(this.state.vanishing)
+            return;
+
         console.log("STARTED");
         this.setState({visible: true});
         const timer = setInterval(this.countDown.bind(this), 1000);
+        this.setState({vanishing: true});
         setTimeout(clearInterval, 5000, timer);
     }
 
